@@ -1,0 +1,138 @@
+/* 
+Định vị thằng con thông qua thằng cha:
+   1. Chỉ ra thằng cha -> position: relative;
+   2. Chỉ ra thằng con -> position: absolute;
+   3. Định vị thằng con theo thằng cha (top, left, right, bottom) 
+*/
+
+/* 
+Sử dụng kí tự ">" để chỉ ra thằng con cấp gần nhất (vd: #box > div) 
+*/
+
+/* 
+Khi ta thêm thuộc tính padding hay border vào 1 khối mà không muốn nó dãn nở ra ta sử dụng thuộc tính box-sizing: border-box; cho khối đó
+*/
+
+/* 
+Nếu có các thẻ (hoặc class) giống nhau trong 1 danh sách ta có thể chọn 1 hoặc nhiều thẻ trong số chúng bằng :nth-child(...)
+   vd1: li.item:nth-child(2); -> chọn thẻ li thứ 2
+   vd2: li.item:nth-child(2n+1); -> chọn thẻ li có số thứ tự lẻ
+*/
+
+/* 
+FLEX-BOX
+- Quy tắc của FLEX BOX là kích thước chiều ngang của phần tử con không vượt quá kích thước chiều ngang của phần tử cha
+(Giải thích: Kích thước chiều ngang của phần tử cha sẽ không thay đổi khi ta tăng kích thước chiều ngang của phần tử con 
+lên vượt quá kích thước chiều ngang của phần tử cha. 
+Khi đó mặc dù kích thước chiều ngang của phần tử con lớn hơn nhưng chiều ngang của phần tử con sẽ không vượt quá mà nằm vừa (không phải là bị cắt đi) trong chiều ngang của phần tử cha)
+
+- FLEX BOX là dùng thằng cha điều khiển thằng con nên tất cả các thuộc tính đều viết vào thằng cha
+
+- FLEX BOX không được sử dụng để làm cả 1 cái giao diện lớn (layout) mà thường dùng để bố trí sắp xếp các chức năng con trên 1 hàng
+(thay thế cho float tránh tràn)
+
+- Kinh nghiệm làm việc với FLEX BOX: thừa còn hơn thiếu (vì nó sẽ không bao giờ bị chườm ra ngoài)
+
+- FlEX chỉ điều khiển thằng con gần nhất. Nếu thằng cháu, thằng chắt mà có ảnh được đặt cố định kích thước sẽ có thể ảnh sẽ bị lòi ra ngoài khi ta co trang lại 
+Cách khắc phục: 
+   -> Cho ảnh tự động tương thức
+   -> Sử dụng media để tương thích với các kích thước cửa sổ khác nhau
+
+- Khi ta sủ dụng thuộc tính display:flex; thì lập tức các phần tử sẽ tự động nằm trên 1 hàng
+
+1. Thuộc tính flex-direction (điều hướng) có 4 giá trị:
+    + row: điều hướng trên 1 dòng
+    + column: điều hướng trên 1 cột
+    + row-reverse: điều hướng trên 1 dòng nhưng theo thứ tự đảo ngược
+    + column-reverse: điều hướng trên 1 cột nhưng theo thứ tự đảo ngược
+
+2. Thuộc tính flex-wrap có 2 giá trị:
+    + nowrap (giá trị mặc định): không xuống dòng khi kích thước chiều ngang của phần tử con vượt quá cha
+    + wrap: tự động xuống dòng...
+
+3. Thuộc tính order để đảo hay xáo trộn vị trí của các khối con 
+order: ...vị trí...; (được viết trong class của khối con)
+
+4. Thuộc tính flex-grow (khi giao diện bị thiếu hụt hay nói cách khác là có những khoảng trống thừa) cho phép 1 hoặc nhiều khối con bất kì chiếm 1 phần không gian thừa
+flex-grow: ..Số phần muốn lấy..; (viết trong class của khối con)
+
+5. Thuộc tính flex-shrink (tốc độ co của phần tử bất kì) được sử dụng để thay đổi tốc độ co dãn của 1 hay nhiều phần tử bất khì khi ta thực co lại hoặc kéo ra
+flex-shrink: ..Tốc độ co..; (được viết trong class của lớp con) 
+vd: flex-shrink:2; -> Tôc độ co dãn của khối con này nhanh gấp 2 lần các khối con khác
+
+6. Thuộc tính flex-basis thì tương tự với width
+
+7. Thuộc tính justify-content cho phép căn chỉnh khối con theo khối cha gồm 6 giá trị: 
+    + flex-start: căn trái
+    + flex-end: căn phải
+    + center: căn giữa
+    + space-between: giãn đều khoảng cách giữa các khối con trừ hai đầu biên
+    + space-around: giãn đều khoảng cách giữa các khối con trong khối cha
+*/
+
+/* 
+Khi có 1 biểu tượng trước hoặc sau text thì nó có thể là ảnh hoặc font icon
+*/
+
+/* 
+Ta có thể css để gắn 1 ảnh làm biểu tượng phía trước hoặc phía sau 1 phần tử bất kì như sau: 
+- Gắn phía trước ...lớp(id)... ::before { content: ""; ...css(*)...;}
+- Gắn phía sau ...lớp(id)... ::after { content: ""; ...css(*)...;}
+B1. Ta lấy kích thước của hình ảnh mà ta muốn làm biểu tượng
+B2. Tạo 1 khối đúng bằng kích thước của ảnh mà ta muốn làm biểu tượng
+B3. Cho khối cha thuộc tính position: relative;
+B4. Cho nó thuộc tính position: absolute; và định vị vị trí cho nó (vd: top:0; left:0;) viết ở chỗ (*)
+B5. Cho khối cha thuộc tính padding đúng bằng kích thước chiều ngang của hình ảnh (vd:cho hình ảnh vào bên trái -> padding-left:50px)
+Lưu ý: content: ""; là thuộc tính bắt buộc
+*/
+
+/* 
+Ảnh là inline nên khi muốn căn giữa ta sử dụng text-align: center;
+*/
+
+/* 
+khi gặp 1 hảng có các phần tử con được sắp xếp thẳng nhau và có xu hướng nhảy xuống dòng khi co trang ta xử lý bằng cách padding trên dưới
+*/
+
+/* 
+p, h, ul là những thẻ luôn có margin-bottom ngoài ra ul còn có padding-left 
+*/
+
+/* 
+Khi 2 thằng inline đặt cạnh nhau sẽ xảy ra lỗi là chúng sẽ không đứng sát nhau và thẳng hàng -> sử dụng float:left cho các class của nó hoặc flex-box 
+*/
+
+/* 
+:last-child là gọi tới thẻ cuối cùng trong số các thẻ giống nhau đúng liền nhau hoặc trong 1 dánh sách
+:first-chile là thẻ đầu tiên...
+*/
+
+/* 
+Để hiệu ứng nhanh, chậm hay mượt mà hơn ta sử dụng thuộc tính transition
+1. Để sử dụng mỗi hiệu ứng vào (khi ta hover vào) thì ta cho thuộc tính transition: .2s; (với .2s là 0.2s)
+2. Để sử dụng cả hiệu ứng vào ra thì ta thêm thuộc tính transition: all .2s; vào class của phần tử đó
+*/
+
+/* 
+Có chia cột thì mới dùng row (bởi vì nó sẽ phá cấu trúc chiều ngang 
+Lưu ý: có dùng col thì mới dùng row
+*/
+
+/* 
+Kinh nghiệm: Khi làm giao diện, chắc chắc slide sản phẩm có thể sẽ được dùng lại, nên bắt đầu từ slide sản phẩm ta bắt đầu sủ dụng class hết 
+*/
+
+/* 
+visiblity: hidden được sử dụng để ẩn phần tử khỏi trang web (Không làm ảnh hưởng tới các phần tử khác)
+--> Nó không bị xóa đi mà vẫn nằm trong trang web (để xóa ta sử dungh thuộc tính display: none)
+*/
+
+/* 
+Một số thẻ của bootstrap được css rất mạnh khi ta không ghi đè được thì sử dụng !important ngay sau thuộc tính
+*/
+
+/* 
+Để khắc phục tình trạng các sản phẩm bị thò thụt ta có thê cho thẻ gây ra thò thụt thuộc tính min-height: có chiều cao bằng chiều cao của nội dung dài nhất
+*/
+
+
